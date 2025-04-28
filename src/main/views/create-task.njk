@@ -1,0 +1,140 @@
+{% extends "template.njk" %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+{% block content %}
+
+<h2 class="govuk-heading-m">Create New Task</h2>
+
+<form id="create-form" action="/api/create-task" method="POST">
+
+  <!-- Title -->
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="title">
+      Title
+    </label>
+    <p id="title-error" class="govuk-error-message" style="display: none;">
+      <span class="govuk-visually-hidden">Error:</span> Enter a title
+    </p>
+    <input class="govuk-input" id="title" name="title" type="text" aria-describedby="title-error">
+  </div>
+
+  <!-- Case Number -->
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="case-number">
+      Case Number
+    </label>
+    <p id="case-number-error" class="govuk-error-message" style="display: none;">
+      <span class="govuk-visually-hidden">Error:</span> Enter a case number
+    </p>
+    <input class="govuk-input" id="case-number" name="caseNumber" type="text" aria-describedby="case-number-error">
+  </div>
+
+  <!-- Description -->
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="description">
+      Description (optional)
+    </label>
+    <textarea class="govuk-textarea" id="description" name="description" rows="5"></textarea>
+  </div>
+
+  <!-- Status -->
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="status">
+      Status
+    </label>
+    <p id="status-error" class="govuk-error-message" style="display: none;">
+      <span class="govuk-visually-hidden">Error:</span> Enter a status
+    </p>
+    <input class="govuk-input" id="status" name="status" type="text" aria-describedby="status-error">
+  </div>
+
+  <!-- Deadline -->
+  <p id="deadline-error" class="govuk-error-message" style="display: none;">
+  <span class="govuk-visually-hidden">Error:</span> Enter a date
+</p>
+  {{ govukDateInput({
+  id: "deadline",
+  namePrefix: "deadline",
+  fieldset: {
+    legend: {
+      text: "Deadline"
+    }
+  }
+}) }}
+
+
+  {{ govukButton({
+    text: "Create",
+    id: "create-button",
+    attributes: {
+      type: "submit"
+    }
+  }) }}
+
+  {{ govukButton({
+    text: "Cancel",
+    href: "/"
+  }) }}
+
+</form>
+
+<script>
+  const form = document.getElementById('create-form');
+  const titleInput = document.getElementById('title');
+  const caseNumberInput = document.getElementById('case-number');
+  const descriptionInput = document.getElementById('description');
+  const statusInput = document.getElementById('status');
+
+  const deadlineDayInput = document.getElementById('deadline-day');
+  const deadlineMonthInput = document.getElementById('deadline-month');
+  const deadlineYearInput = document.getElementById('deadline-year');
+
+  const fields = [
+    { input: titleInput, errorId: 'title-error' },
+    { input: caseNumberInput, errorId: 'case-number-error' },
+    { input: statusInput, errorId: 'status-error' }
+  ];
+
+  form.addEventListener('submit', function(event) {
+    let isValid = true;
+
+    // Validate text inputs
+    fields.forEach(({ input, errorId }) => {
+      const value = input.value.trim();
+      const errorMessage = document.getElementById(errorId);
+      const formGroup = input.closest('.govuk-form-group');
+
+      if (value === "") {
+        errorMessage.style.display = "block";
+        formGroup.classList.add('govuk-form-group--error');
+        input.classList.add('govuk-input--error');
+        isValid = false;
+      }
+    });
+
+    // Validate date input
+    const deadlineDay = deadlineDayInput.value.trim();
+    const deadlineMonth = deadlineMonthInput.value.trim();
+    const deadlineYear = deadlineYearInput.value.trim();
+    const deadlineError = document.getElementById('deadline-error');
+    const deadlineFormGroup = deadlineDayInput.closest('.govuk-form-group');
+
+    if (deadlineDay === "" || deadlineMonth === "" || deadlineYear === "") {
+      deadlineError.style.display = "block";
+      deadlineFormGroup.classList.add('govuk-form-group--error');
+      deadlineDayInput.classList.add('govuk-input--error');
+      deadlineMonthInput.classList.add('govuk-input--error');
+      deadlineYearInput.classList.add('govuk-input--error');
+      isValid = false;
+    }
+
+    if (!isValid) {
+      event.preventDefault();
+    }
+  });
+</script>
+
+{% endblock %}

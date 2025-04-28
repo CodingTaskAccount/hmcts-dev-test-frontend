@@ -1,0 +1,34 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "macros/task-display.njk" import taskDisplay %}
+
+
+
+{% block content %}
+
+   <h2 class="govuk-heading-m">Delete Task</h2>
+
+   {% if isOk and task %}
+
+      {{ taskDisplay(task) }}
+
+      {{ govukButton({
+         text: "Delete",
+         href: "/api/delete-task/" + task.id,
+         classes: "govuk-button--warning"
+      }) }}
+      
+      {{ govukButton({
+         text: "Cancel",
+         href: "/"
+      }) }}
+
+   {% elif isNotFound %}
+
+      <p>Task Not Found</p>
+
+   {% endif %}
+
+   
+
+{% endblock %}

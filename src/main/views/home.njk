@@ -6,20 +6,32 @@
 
 {% block content %}
 
+{{ govukButton({
+      id: "create-button",
+      text: "Create a new Task",
+      href: "/create-task"
+    }) }}
+
+<hr class="govuk-section-break govuk-section-break--visible">
+<div class="govuk-!-padding-bottom-2"></div>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third-from-desktop">
     
     <h3 class="govuk-heading-m">Find a task</h3>
 
-    {{ govukInput({
-      label: {
-      text: "Task ID"
-    },
-      id: "task-id",
-      name: "taskId"
-    }) }}
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="task-id">
+        Task ID
+      </label>
+      <p id="task-id-error" class="govuk-error-message" style="display: none;">
+        <span class="govuk-visually-hidden">Error:</span> Enter a valid Task ID
+      </p>
+      <input class="govuk-input" id="task-id" name="taskId" type="number" aria-describedby="task-id-hint task-id-error">
+    </div>
 
     {{ govukButton({
+      id: "find-button",
       text: "Find"
     }) }}
 
@@ -46,5 +58,26 @@
   </div>
 </div>
 
+<script>
+  const taskIdInput = document.getElementById('task-id');
+  const findButton = document.getElementById('find-button');
+  const errorMessage = document.getElementById('task-id-error');
+  const formGroup = taskIdInput.closest('.govuk-form-group');
+
+  findButton.addEventListener('click', function() {
+    
+    const inputValue = taskIdInput.value.trim();
+
+    if (inputValue !== "") {
+      
+      window.location.href = `/show-task/${inputValue}`;
+
+    } else {
+      errorMessage.style.display = "block";
+      formGroup.classList.add('govuk-form-group--error');
+      taskIdInput.classList.add('govuk-input--error');
+    }
+  });
+</script>
 
 {% endblock %}

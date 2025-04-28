@@ -1,0 +1,28 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "macros/task-display.njk" import taskDisplay %}
+
+
+
+{% block content %}
+
+   <h2 class="govuk-heading-m">Task</h2>
+
+   {% if isOk and task %}
+
+      {{ taskDisplay(task) }}
+      
+      {{ govukButton({
+         text: "Home",
+         href: "/"
+      }) }}
+
+   {% elif isNotFound %}
+
+      <p>Task Not Found</p>
+
+   {% endif %}
+
+   
+
+{% endblock %}

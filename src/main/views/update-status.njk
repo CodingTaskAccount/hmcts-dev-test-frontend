@@ -1,5 +1,7 @@
 {% extends "template.njk" %}
 {% from "macros/task-display.njk" import taskDisplay %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block content %}
 
@@ -9,10 +11,66 @@
    
       {{ taskDisplay(task) }}
 
+      <form id="update-status-form" action="/api/update-status/{{ task.id }}" method="POST">
+
+         <div class="govuk-form-group">
+            <label class="govuk-label" for="new-status">
+               New status
+            </label>
+            <p id="new-status-error" class="govuk-error-message" style="display: none;">
+               <span class="govuk-visually-hidden">Error:</span> Enter a new status
+            </p>
+            <input class="govuk-input" id="new-status" name="newStatus" type="text" aria-describedby="new-status-hint new-status-error">
+         </div>
+
+         {{ govukButton({
+               text: "Update",
+               id: "update-button",
+               attributes: {
+               type: "submit"
+               }
+            }) 
+         }}
+     
+         {{ govukButton({
+               text: "Cancel",
+               href: "/"
+               }) 
+         }}
+
+      </form>
+
    {% elif isNotFound %}
 
       <p>Task Not Found</p>
 
    {% endif %}
+
+<script>
+  const form = document.getElementById('update-status-form');
+  const newStatusInput = document.getElementById('new-status');
+  const errorMessage = document.getElementById('new-status-error');
+  const formGroup = newStatusInput.closest('.govuk-form-group');
+
+  form.addEventListener('submit', function(event) {
+    const inputValue = newStatusInput.value.trim();
+
+    if (inputValue === "") {
+      // Prevent form submission
+      event.preventDefault();
+
+      // Show error message and apply error styling
+      errorMessage.style.display = "block";
+      formGroup.classList.add('govuk-form-group--error');
+      newStatusInput.classList.add('govuk-input--error');
+    } else {
+      // Clear any previous error styling
+      errorMessage.style.display = "none";
+      formGroup.classList.remove('govuk-form-group--error');
+      newStatusInput.classList.remove('govuk-input--error');
+    }
+  });
+</script>
+
 
 {% endblock %}

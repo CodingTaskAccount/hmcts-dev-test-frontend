@@ -2,12 +2,10 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl">Page Not Found</h1>
+  <h1 class="govuk-heading-xl">Task {{ taskId }} Deleted</h1>
 
   {{ govukButton({
-               text: "Home",
-               href: "/"
-               }) 
-         }}
-         
+         text: "Home Page",
+         href: "/"
+  }) }}
 {% endblock %}
