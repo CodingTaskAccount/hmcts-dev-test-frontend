@@ -4,6 +4,11 @@
   {% include "webpack/css.njk" %}
 {% endblock %}
 
+{% block beforeContent %}
+  <div class="govuk-!-padding-top-9"></div>
+  <h1 class="govuk-heading-xl">HMCTS Task Management</h1>
+{% endblock %}
+
 {% block bodyEnd %}
   {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
   {% include "webpack/js.njk" %}

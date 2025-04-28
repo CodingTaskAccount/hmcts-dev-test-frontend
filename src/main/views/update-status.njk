@@ -1,0 +1,18 @@
+{% extends "template.njk" %}
+{% from "macros/task-display.njk" import taskDisplay %}
+
+{% block content %}
+
+   <h2 class="govuk-heading-m">Update Task Status</h2>
+
+   {% if isOk and task %}
+   
+      {{ taskDisplay(task) }}
+
+   {% elif isNotFound %}
+
+      <p>Task Not Found</p>
+
+   {% endif %}
+
+{% endblock %}

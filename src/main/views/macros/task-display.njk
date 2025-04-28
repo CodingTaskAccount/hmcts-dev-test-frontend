@@ -14,8 +14,8 @@
           items: [
             {
               href: "#",
-              text: "Change",
-              visuallyHiddenText: "change case id ?!"
+              text: "Delete",
+              visuallyHiddenText: "Delete Task"
             }
           ]
         }
@@ -28,13 +28,7 @@
           text: task.caseNumber
         },
         actions: {
-          items: [
-            {
-              href: "#",
-              text: "Change",
-              visuallyHiddenText: "change case number"
-            }
-          ]
+          items: []
         }
       },
       {
@@ -45,13 +39,7 @@
           html: task.title
         },
         actions: {
-          items: [
-            {
-              href: "#",
-              text: "Change",
-              visuallyHiddenText: "change case title"
-            }
-          ]
+          items: []
         }
       },
       {
@@ -62,18 +50,7 @@
           html: task.description
         },
         actions: {
-          items: [
-            {
-              href: "#",
-              text: "Delete",
-              visuallyHiddenText: "Delete description"
-            },
-            {
-              href: "#",
-              text: "Change",
-              visuallyHiddenText: "Change description"
-            }
-          ]
+          items: []
         }
       },
       {
@@ -84,7 +61,13 @@
           html: task.status
         },
         actions: {
-          items: []
+          items: [
+          {
+              href: "#",
+              text: "Update",
+              visuallyHiddenText: "Delete Task"
+            }
+          ]
         }
       },
       {
