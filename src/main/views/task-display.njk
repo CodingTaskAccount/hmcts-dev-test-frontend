@@ -1,0 +1,104 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% macro taskDisplay(task) %}
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          text: "ID"
+        },
+        value: {
+          text: task.id
+        },
+        actions: {
+          items: [
+            {
+              href: "#",
+              text: "Change",
+              visuallyHiddenText: "change case id ?!"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Case Number"
+        },
+        value: {
+          text: task.caseNumber
+        },
+        actions: {
+          items: [
+            {
+              href: "#",
+              text: "Change",
+              visuallyHiddenText: "change case number"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Title"
+        },
+        value: {
+          html: task.title
+        },
+        actions: {
+          items: [
+            {
+              href: "#",
+              text: "Change",
+              visuallyHiddenText: "change case title"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Description"
+        },
+        value: {
+          html: task.description
+        },
+        actions: {
+          items: [
+            {
+              href: "#",
+              text: "Delete",
+              visuallyHiddenText: "Delete description"
+            },
+            {
+              href: "#",
+              text: "Change",
+              visuallyHiddenText: "Change description"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Status"
+        },
+        value: {
+          html: task.status
+        },
+        actions: {
+          items: []
+        }
+      },
+      {
+        key: {
+          text: "Created Date"
+        },
+        value: {
+          html: task.createdDate
+        },
+        actions: {
+          items: []
+        }
+      }
+    ]
+  }) }}
+  <div class="govuk-!-padding-bottom-4"></div>
+{% endmacro %}
