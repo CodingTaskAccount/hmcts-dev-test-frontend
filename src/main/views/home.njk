@@ -1,27 +1,51 @@
 {% from "task-display.njk" import taskDisplay %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% extends "template.njk" %}
 
 {% block content %}
   <h1 class="govuk-heading-xl">HMCTS Task Management</h1>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third-from-desktop">
+    
+    <h3 class="govuk-heading-m">Find a task</h3>
 
-{% if isOk %}
-  {% if tasks %}
-    {% for task in tasks %}
-      <div class="govuk-accordion__section">
-        {{ taskDisplay(task) }}
-      </div>
-    {% endfor %}
+    {{ govukInput({
+      label: {
+      text: "Task ID"
+    },
+      id: "task-id",
+      name: "taskId"
+    }) }}
 
-  {% else %}
-    <p> No tasks found </p>
-  {% endif %}
+    {{ govukButton({
+      text: "Find"
+    }) }}
 
-{% else %}
+  </div>
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    {% if isOk %}
 
-  <p>Error: Not Found</p>
+      {% if tasks %}
+        {% for task in tasks %}
+          <div class="govuk-accordion__section">
+            {{ taskDisplay(task) }}
+          </div>
+        {% endfor %}
 
-{% endif %}
+      {% else %}
+        <p> No tasks found </p>
+      {% endif %}
+
+    {% else %}
+
+      <p>Error: Not Found</p>
+
+    {% endif %}
+  </div>
+</div>
+
 
 {% endblock %}
